@@ -3,13 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Damageable.h"
 #include "GameFramework/Character.h"
 #include "FirstPersonCharacter.generated.h"
 
 class UInputComponent;
 
 UCLASS(config=Game)
-class AFirstPersonCharacter : public ACharacter
+class AFirstPersonCharacter : public ACharacter, public IDamageable
 {
 	GENERATED_BODY()
 
@@ -79,6 +80,9 @@ public:
 	/** Whether to use motion controller location for aiming. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	uint32 bUsingMotionControllers : 1;
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "IDamageable Interface")
+	void ApplyDamage(int DamageAmount);
 
 protected:
 	

@@ -27,13 +27,10 @@ void ASphereEnemy::OnDamaged()
 
 void ASphereEnemy::MoveTowardsPosition(FVector TargetPosition)
 {
-	if (IsOnFloor())
-	{
-		FVector TargetDirection = (TargetPosition - GetActorLocation()).GetSafeNormal();
-		FVector TorqueDirection = FVector::CrossProduct(FVector(0, 0, 1), TargetDirection);
-		TorqueDirection *= (1000000 * GetWorld()->GetDeltaSeconds());
-		Collider->AddTorqueInRadians(TorqueDirection, "None", true);
-	}
+	FVector TargetDirection = (TargetPosition - GetActorLocation()).GetSafeNormal();
+	FVector TorqueDirection = FVector::CrossProduct(FVector(0, 0, 1), TargetDirection);
+	TorqueDirection *= (10000 * GetWorld()->GetDeltaSeconds());
+	Collider->AddTorqueInRadians(TorqueDirection, "None", true);
 }
 
 void ASphereEnemy::Jump(FVector JumpDirection, float JumpForce)
