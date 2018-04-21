@@ -51,7 +51,7 @@ bool AEnemy::IsOnFloor()
 	if (GetWorld()->LineTraceSingleByChannel(HitData, Start, End, ECC_Visibility, CollisionParams))
 	{
 		float HitDistance = FVector::Dist(Start, HitData.ImpactPoint);
-		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::SanitizeFloat(HitDistance));
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::SanitizeFloat(HitDistance));
 		if (HitDistance <= 0.0f)
 		{
 			return true;

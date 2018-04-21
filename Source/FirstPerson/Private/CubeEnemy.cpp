@@ -40,7 +40,7 @@ void ACubeEnemy::MoveTowardsPosition(FVector TargetPosition)
 	FVector TargetDirection = (TargetPosition - GetActorLocation()).GetSafeNormal();
 	FVector JumpVector = TargetDirection;
 	JumpVector.Z = 1;
-	Jump(JumpVector, 500.0f);
+	Jump(JumpVector, 100.0f);
 }
 
 void ACubeEnemy::Jump(FVector JumpDirection, float JumpForce)
