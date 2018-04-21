@@ -19,7 +19,7 @@ class FIRSTPERSON_API IDamageable
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "IDamageable Interface")
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "IDamageable Interface")
 	void ApplyDamage(int DamageAmount);
 	
 };

@@ -16,17 +16,19 @@ class FIRSTPERSON_API ASphereEnemy : public AEnemy
 
 public:
 	ASphereEnemy();
+	virtual void Die() override;
+	virtual void OnDamaged() override;
 
-public:	
+	UFUNCTION(BlueprintCallable)
+	void MoveTowardsPosition(FVector TargetPosition);
+
+	UFUNCTION(BlueprintCallable)
+	void Jump(FVector JumpDirection, float JumpForce);
+	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* Mesh;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USphereComponent* Collider;
 
-	UFUNCTION(BlueprintCallable)
-	void MoveTowardsPosition(FVector TargetPosition);	 
-
-	UFUNCTION(BlueprintCallable)
-	void Jump(FVector JumpDirection, float JumpForce);
 };

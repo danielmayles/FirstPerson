@@ -11,7 +11,18 @@ ASphereEnemy::ASphereEnemy()
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
 	Mesh->SetupAttachment(Collider);
-	
+
+	SetHealth(10);
+}
+
+
+void ASphereEnemy::Die()
+{
+}
+
+void ASphereEnemy::OnDamaged()
+{
+	SetActorScale3D(GetActorScale3D() * 0.90f);
 }
 
 void ASphereEnemy::MoveTowardsPosition(FVector TargetPosition)
@@ -19,12 +30,9 @@ void ASphereEnemy::MoveTowardsPosition(FVector TargetPosition)
 	if (IsOnFloor())
 	{
 		FVector TargetDirection = (TargetPosition - GetActorLocation()).GetSafeNormal();
-		FVector DirectionalTorque = FVector::CrossProduct(FVector(0, 0, 1), TargetDirection);
-
-		DirectionalTorque *= (1000000 * GetWorld()->GetDeltaSeconds());
-		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, Rotation.ToString());
-
-		Collider->AddTorqueInDegrees(DirectionalTorque, "None", true);
+		FVector TorqueDirection = FVector::CrossProduct(FVector(0, 0, 1), TargetDirection);
+		TorqueDirection *= (1000000 * GetWorld()->GetDeltaSeconds());
+		Collider->AddTorqueInRadians(TorqueDirection, "None", true);
 	}
 }
 

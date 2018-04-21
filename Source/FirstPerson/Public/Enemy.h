@@ -10,22 +10,23 @@ class FIRSTPERSON_API AEnemy : public APawn, public IDamageable
 {
 	GENERATED_BODY()
 
-public:
+public:	
 	AEnemy();
 
-protected:
-	virtual void BeginPlay() override;
-
-public:	
-	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	virtual void Die();
-	
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "IDamageable Interface")
 	void ApplyDamage(int DamageAmount);
 
 	UFUNCTION(BlueprintCallable)
+	void SetHealth(int NewHealthValue);
+
+	UFUNCTION(BlueprintCallable)
 	bool IsOnFloor();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void OnDamaged();
+
+	UFUNCTION(BlueprintCallable)
+	virtual void Die();
 
 private:
 	int Health;

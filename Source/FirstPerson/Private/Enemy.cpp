@@ -6,23 +6,6 @@ AEnemy::AEnemy():
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void AEnemy::BeginPlay()
-{
-	Super::BeginPlay();	
-}
-
-// Called every frame
-void AEnemy::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
-// Called to bind functionality to input
-void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-}
-
 void AEnemy::ApplyDamage_Implementation(int DamageAmount)
 {
 	Health -= DamageAmount;
@@ -30,11 +13,18 @@ void AEnemy::ApplyDamage_Implementation(int DamageAmount)
 	{
 		Die();
 	}
+	OnDamaged();
 }
 
 void AEnemy::Die()
 {
 	Destroy();
+}
+
+void AEnemy::SetHealth(int NewHealthValue)
+{
+	Health = NewHealthValue;
+
 }
 
 bool AEnemy::IsOnFloor()
@@ -58,5 +48,9 @@ bool AEnemy::IsOnFloor()
 	}
 
 	return false;
+}
+
+void AEnemy::OnDamaged()
+{
 }
 
