@@ -40,12 +40,12 @@ void ACubeEnemy::MoveTowardsPosition(FVector TargetPosition)
 	FVector TargetDirection = (TargetPosition - GetActorLocation()).GetSafeNormal();
 	FVector JumpVector = TargetDirection;
 	JumpVector.Z = 1;
-	Jump(JumpVector, 200.0f);
+	Jump(JumpVector, 500.0f);
 }
 
 void ACubeEnemy::Jump(FVector JumpDirection, float JumpForce)
 {
-	if (!IsFalling())
+	if (IsOnFloor())
 	{
 		CubeCollider->AddImpulse(JumpDirection * JumpForce, "None",  true);
 	}

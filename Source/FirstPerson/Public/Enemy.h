@@ -25,7 +25,7 @@ public:
 	void ApplyDamage(int DamageAmount);
 
 	UFUNCTION(BlueprintCallable)
-	bool IsFalling();
+	bool IsOnFloor();
 
 private:
 	int Health;

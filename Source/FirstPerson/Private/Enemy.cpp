@@ -34,14 +34,28 @@ void AEnemy::ApplyDamage_Implementation(int DamageAmount)
 
 void AEnemy::Die()
 {
-
+	Destroy();
 }
 
-bool AEnemy::IsFalling()
+bool AEnemy::IsOnFloor()
 {
-	if (GetVelocity().Z < 0)
+	FHitResult HitData;
+	FCollisionQueryParams CollisionParams;
+	FVector Origin;
+	FVector BoundsExtent;
+	GetActorBounds(true, Origin, BoundsExtent);
+
+	const FVector Start = GetActorLocation() - BoundsExtent.Z;
+	const FVector End = Start + FVector(0, 0, -1);
+
+	if (GetWorld()->LineTraceSingleByChannel(HitData, Start, End, ECC_Visibility, CollisionParams))
 	{
-		return true;
+		float HitDistance = FVector::Dist(Start, HitData.ImpactPoint);
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::SanitizeFloat(HitDistance));
+		if (HitDistance <= 0.0f)
+		{
+			return true;
+		}
 	}
 
 	return false;
