@@ -7,6 +7,9 @@
 #include "GameFramework/Character.h"
 #include "FirstPersonCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDie);
+
+
 class UInputComponent;
 
 UCLASS(config=Game)
@@ -81,8 +84,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	uint32 bUsingMotionControllers : 1;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Gameplay)
+	int Health;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPlayerDie OnPlayerDie;
+
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "IDamageable Interface")
 	void ApplyDamage(int DamageAmount);
+	virtual void ApplyDamage_Implementation(int DamageAmount);
+
+	UFUNCTION(BlueprintCallable, Category = Gameplay)
+	virtual void Die();
 
 protected:
 	

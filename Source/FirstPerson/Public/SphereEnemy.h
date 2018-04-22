@@ -17,7 +17,7 @@ class FIRSTPERSON_API ASphereEnemy : public AEnemy
 public:
 	ASphereEnemy();
 	virtual void Die() override;
-	virtual void OnDamaged() override;
+	virtual void ApplyDamage_Implementation(int DamageAmount) override;
 
 	UFUNCTION(BlueprintCallable)
 	void MoveTowardsPosition(FVector TargetPosition);
@@ -25,6 +25,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void Jump(FVector JumpDirection, float JumpForce);
 	
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* Mesh;
 

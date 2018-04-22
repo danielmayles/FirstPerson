@@ -7,6 +7,7 @@ ASphereEnemy::ASphereEnemy()
 
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Enemy Collider"));
 	Collider->SetSimulatePhysics(true);
+	Collider->OnComponentHit.AddDynamic(this, &ASphereEnemy::OnHit);
 	RootComponent = Collider;
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
@@ -20,9 +21,10 @@ void ASphereEnemy::Die()
 {
 }
 
-void ASphereEnemy::OnDamaged()
+void ASphereEnemy::ApplyDamage_Implementation(int DamageAmount)
 {
-	SetActorScale3D(GetActorScale3D() * 0.90f);
+	Super::ApplyDamage_Implementation(DamageAmount);
+	SetActorScale3D(GetActorScale3D() * 0.5f);
 }
 
 void ASphereEnemy::MoveTowardsPosition(FVector TargetPosition)
@@ -39,6 +41,22 @@ void ASphereEnemy::Jump(FVector JumpDirection, float JumpForce)
 	{
 		JumpDirection.Z = 1;
 		Collider->AddImpulse(JumpDirection * JumpForce, "None",  true);
+	}
+}
+
+void ASphereEnemy::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPrimitiveComponent * OtherComp, FVector NormalImpulse, const FHitResult & Hit)
+{
+	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL))
+	{
+		if (OtherComp->IsSimulatingPhysics())
+		{
+			OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+		}
+
+		if (OtherActor->GetClass() != GetClass() && OtherActor->GetClass()->ImplementsInterface(UDamageable::StaticClass()))
+		{
+			IDamageable::Execute_ApplyDamage(OtherActor, 10);
+		}
 	}
 }
 

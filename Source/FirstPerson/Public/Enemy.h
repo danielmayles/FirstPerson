@@ -15,15 +15,13 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "IDamageable Interface")
 	void ApplyDamage(int DamageAmount);
+	virtual void ApplyDamage_Implementation(int DamageAmount);
 
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(int NewHealthValue);
 
 	UFUNCTION(BlueprintCallable)
 	bool IsOnFloor();
-
-	UFUNCTION(BlueprintCallable)
-	virtual void OnDamaged();
 
 	UFUNCTION(BlueprintCallable)
 	virtual void Die();

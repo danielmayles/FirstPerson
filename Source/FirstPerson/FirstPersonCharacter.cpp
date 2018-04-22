@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/InputSettings.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
@@ -17,7 +18,8 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 //////////////////////////////////////////////////////////////////////////
 // AFirstPersonCharacter
 
-AFirstPersonCharacter::AFirstPersonCharacter()
+AFirstPersonCharacter::AFirstPersonCharacter() :
+	Health(100)
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
@@ -263,5 +265,20 @@ bool AFirstPersonCharacter::EnableTouchscreenMovement(class UInputComponent* Pla
 
 void AFirstPersonCharacter::ApplyDamage_Implementation(int DamageAmount)
 {
+	Health -= DamageAmount;
+	if (Health <= 0)
+	{
+		Die();
+	}
+}
 
+void AFirstPersonCharacter::Die()
+{
+	APlayerController* Controller = Cast<APlayerController>(GetController());
+	if (Controller != nullptr)
+	{
+		DisableInput(Controller);
+	}
+	
+	OnPlayerDie.Broadcast();
 }

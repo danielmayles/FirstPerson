@@ -13,7 +13,6 @@ void AEnemy::ApplyDamage_Implementation(int DamageAmount)
 	{
 		Die();
 	}
-	OnDamaged();
 }
 
 void AEnemy::Die()
@@ -24,7 +23,6 @@ void AEnemy::Die()
 void AEnemy::SetHealth(int NewHealthValue)
 {
 	Health = NewHealthValue;
-
 }
 
 bool AEnemy::IsOnFloor()
@@ -50,7 +48,4 @@ bool AEnemy::IsOnFloor()
 	return false;
 }
 
-void AEnemy::OnDamaged()
-{
-}
 
