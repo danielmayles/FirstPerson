@@ -15,6 +15,10 @@ void AEnemy::ApplyDamage_Implementation(int DamageAmount)
 	}
 }
 
+void AEnemy::MoveTowardsPosition(FVector TargetPosition)
+{
+}
+
 void AEnemy::Die()
 {
 	Destroy();

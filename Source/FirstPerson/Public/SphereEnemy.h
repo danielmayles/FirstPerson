@@ -20,7 +20,7 @@ public:
 	virtual void ApplyDamage_Implementation(int DamageAmount) override;
 
 	UFUNCTION(BlueprintCallable)
-	void MoveTowardsPosition(FVector TargetPosition);
+	virtual void MoveTowardsPosition(FVector TargetPosition) override;
 
 	UFUNCTION(BlueprintCallable)
 	void Jump(FVector JumpDirection, float JumpForce);

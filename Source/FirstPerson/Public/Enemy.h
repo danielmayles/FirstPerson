@@ -18,6 +18,9 @@ public:
 	virtual void ApplyDamage_Implementation(int DamageAmount);
 
 	UFUNCTION(BlueprintCallable)
+	virtual void MoveTowardsPosition(FVector TargetPosition);
+
+	UFUNCTION(BlueprintCallable)
 	void SetHealth(int NewHealthValue);
 
 	UFUNCTION(BlueprintCallable)
