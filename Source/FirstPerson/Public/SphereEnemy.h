@@ -6,11 +6,11 @@
 #include "GameFramework/Pawn.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
-#include "Enemy.h"
+#include "NPCPawn.h"
 #include "SphereEnemy.generated.h"
 
 UCLASS()
-class FIRSTPERSON_API ASphereEnemy : public AEnemy
+class FIRSTPERSON_API ASphereEnemy : public ANPCPawn
 {
 	GENERATED_BODY()
 

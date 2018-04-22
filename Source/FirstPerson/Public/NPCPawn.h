@@ -3,15 +3,15 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Damageable.h"
-#include "Enemy.generated.h"
+#include "NPCPawn.generated.h"
 
 UCLASS()
-class FIRSTPERSON_API AEnemy : public APawn, public IDamageable
+class FIRSTPERSON_API ANPCPawn : public APawn, public IDamageable
 {
 	GENERATED_BODY()
 
 public:	
-	AEnemy();
+	ANPCPawn();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "IDamageable Interface")
 	void ApplyDamage(int DamageAmount);

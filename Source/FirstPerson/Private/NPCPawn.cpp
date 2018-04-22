@@ -1,12 +1,12 @@
-#include "Enemy.h"
+#include "NPCPawn.h"
 
-AEnemy::AEnemy():
+ANPCPawn::ANPCPawn():
 	Health(100)
 {
 	PrimaryActorTick.bCanEverTick = false;
 }
 
-void AEnemy::ApplyDamage_Implementation(int DamageAmount)
+void ANPCPawn::ApplyDamage_Implementation(int DamageAmount)
 {
 	Health -= DamageAmount;
 	if (Health <= 0)
@@ -15,21 +15,20 @@ void AEnemy::ApplyDamage_Implementation(int DamageAmount)
 	}
 }
 
-void AEnemy::MoveTowardsPosition(FVector TargetPosition)
+void ANPCPawn::MoveTowardsPosition(FVector TargetPosition)
 {
 }
 
-void AEnemy::Die()
+void ANPCPawn::Die()
 {
-	Destroy();
 }
 
-void AEnemy::SetHealth(int NewHealthValue)
+void ANPCPawn::SetHealth(int NewHealthValue)
 {
 	Health = NewHealthValue;
 }
 
-bool AEnemy::IsOnFloor()
+bool ANPCPawn::IsOnFloor()
 {
 	FHitResult HitData;
 	FCollisionQueryParams CollisionParams;
