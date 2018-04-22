@@ -1,7 +1,12 @@
 #include "SphereEnemy.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "FirstPersonCharacter.h"
 
-ASphereEnemy::ASphereEnemy()
+ASphereEnemy::ASphereEnemy() :
+	ScaleModifierPerHit(0.5f),
+	TorqueModifier(10000),
+	DamagePerAttack(20),
+	AbleToDoDamage(true)
 {
 	PrimaryActorTick.bCanEverTick = false;
 
@@ -13,25 +18,25 @@ ASphereEnemy::ASphereEnemy()
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Enemy Mesh"));
 	Mesh->SetupAttachment(Collider);
 
-	SetHealth(10);
+	SetHealth(3);
 }
-
 
 void ASphereEnemy::Die()
 {
+	Destroy();
 }
 
 void ASphereEnemy::ApplyDamage_Implementation(int DamageAmount)
 {
 	Super::ApplyDamage_Implementation(DamageAmount);
-	SetActorScale3D(GetActorScale3D() * 0.5f);
+	SetActorScale3D(GetActorScale3D() * ScaleModifierPerHit);
 }
 
 void ASphereEnemy::MoveTowardsPosition(FVector TargetPosition)
 {
 	FVector TargetDirection = (TargetPosition - GetActorLocation()).GetSafeNormal();
 	FVector TorqueDirection = FVector::CrossProduct(FVector(0, 0, 1), TargetDirection);
-	TorqueDirection *= (10000 * GetWorld()->GetDeltaSeconds());
+	TorqueDirection *= (TorqueModifier * GetWorld()->GetDeltaSeconds());
 	Collider->AddTorqueInRadians(TorqueDirection, "None", true);
 }
 
@@ -48,15 +53,31 @@ void ASphereEnemy::OnHit(UPrimitiveComponent * HitComp, AActor * OtherActor, UPr
 {
 	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL))
 	{
-		if (OtherComp->IsSimulatingPhysics())
+		if (MinVelocityToDoDamage < (GetVelocity()).Size() && AbleToDoDamage)
 		{
-			OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
-		}
-
-		if (OtherActor->GetClass() != GetClass() && OtherActor->GetClass()->ImplementsInterface(UDamageable::StaticClass()))
-		{
-			IDamageable::Execute_ApplyDamage(OtherActor, 10);
+			if (OtherActor->GetClass() != GetClass() && OtherActor->GetClass()->ImplementsInterface(UDamageable::StaticClass()))
+			{
+				IDamageable::Execute_ApplyDamage(OtherActor, DamagePerAttack);
+				TemporarilyDisableAttacking(1.0f);			
+			}
 		}
 	}
+}
+
+void ASphereEnemy::TemporarilyDisableAttacking(float AmountTimeToDisable)
+{
+	DisableAttacking();
+	FTimerHandle DamageDisableTimer;
+	GetWorld()->GetTimerManager().SetTimer(DamageDisableTimer, this, &ASphereEnemy::EnableAttacking, 1.0f);
+}
+
+void ASphereEnemy::DisableAttacking()
+{
+	AbleToDoDamage = false;
+}
+
+void ASphereEnemy::EnableAttacking()
+{
+	AbleToDoDamage = true;
 }
 

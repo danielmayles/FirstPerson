@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Damageable.h"
 #include "GameFramework/Character.h"
+#include "Components/AudioComponent.h"
 #include "FirstPersonCharacter.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDie);
@@ -49,6 +50,8 @@ class AFirstPersonCharacter : public ACharacter, public IDamageable
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UMotionControllerComponent* L_MotionController;
 
+
+
 public:
 	AFirstPersonCharacter();
 
@@ -56,6 +59,9 @@ protected:
 	virtual void BeginPlay();
 
 public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	UAudioComponent* AudioComponent;
+
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseTurnRate;

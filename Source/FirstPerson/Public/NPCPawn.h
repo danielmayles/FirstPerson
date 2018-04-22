@@ -29,7 +29,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void Die();
 
-private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Options")
 	int Health;
-	bool IsAlive;
+
 };

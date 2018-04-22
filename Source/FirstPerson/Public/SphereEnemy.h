@@ -34,4 +34,22 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 	USphereComponent* Collider;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Options")
+	float DamagePerAttack;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Options")
+	float ScaleModifierPerHit;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Options")
+	float TorqueModifier;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC Options")
+	float MinVelocityToDoDamage;
+
+private:
+	void TemporarilyDisableAttacking(float AmountTimeToDisable);
+	void DisableAttacking();
+	void EnableAttacking();
+
+	bool AbleToDoDamage;
 };
